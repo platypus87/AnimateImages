@@ -45,6 +45,7 @@ public class CMSC405P1Template extends JPanel {
     static double scaleY = 1.0;
     ImageTemplate myImages = new ImageTemplate();
 
+    //BufferedImage crossHair = myImages.getImage(ImageTemplate.crossHair); //testing image
     BufferedImage Pi = myImages.getImage(ImageTemplate.Pi);
     BufferedImage Phi = myImages.getImage(ImageTemplate.Phi);
     BufferedImage euler = myImages.getImage(ImageTemplate.euler);
@@ -150,6 +151,16 @@ public class CMSC405P1Template extends JPanel {
             default:
                 break;
         } // End switch
+
+//        g2.translate(translateX, translateY); // Move image.
+//        // To offset translate again
+//        g2.translate(0,0);
+//        g2.rotate(rotation); // Rotate image.
+//        g2.scale(scaleX, scaleY); // Scale image.
+//        //g2.drawImage(Pi, 0, 0, this); // Draw Pi.
+//        //g2.drawImage(Phi, 0, 0, this); // Draw Phi.
+//        g2.drawImage(crossHair, 0, 0, this); // Draw Phi.
+//        g2.setTransform(savedTransform);
 
         g2.translate(translateX, translateY); // Move image.
         // To offset translate again
