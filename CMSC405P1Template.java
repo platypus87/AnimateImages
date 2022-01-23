@@ -13,6 +13,8 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
@@ -70,7 +72,7 @@ public class CMSC405P1Template extends JPanel {
         // Modified to change timing and allow for recycling
         animationTimer = new Timer(1600, new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                if (panel.frameNumber > 3) {
+                if (panel.frameNumber > 4) {
                     panel.frameNumber = 1;
                 } else {
                     panel.frameNumber++;
@@ -79,6 +81,7 @@ public class CMSC405P1Template extends JPanel {
                 panel.repaint();
             }
         });
+
         window.setVisible(true); // Open the window, making it visible on the screen.
         animationTimer.start();  // Start the animation running.
     }
@@ -121,19 +124,26 @@ public class CMSC405P1Template extends JPanel {
         System.out.println("Frame is " + frameNumber);
         switch (frameNumber) {
             case 1: // First frame is unmodified.
+                translateX = 0;
+                translateY = 0;
+                scaleX = 1.0;
+                scaleY = 1.0;
+                rotation = -90*Math.PI/180; //Image is upright here
+                break;
+            case 2:
                 translateX = -5;
                 translateY = 7;
                 scaleX = 1.0;
                 scaleY = 1.0;
                 rotation = -90*Math.PI/180; //Image is upright here
                 break;
-            case 2: // Second frame translates each image by (-9, 5).
+            case 3: // Second frame translates each image by (-9, 5).
                 rotation = -45*Math.PI/180; //rotate 45 degrees counter
                 break;
-            case 3: // Third frame rotates each image by 60 degrees Counter
+            case 4: // Third frame rotates each image by 60 degrees Counter
                 rotation = -135*Math.PI/180;
                 break;
-            case 4:
+            case 5:
                 scaleX = 2.0;
                 scaleY = 0.5;
             // Can add more cases as needed
@@ -143,7 +153,18 @@ public class CMSC405P1Template extends JPanel {
 
         g2.translate(translateX, translateY); // Move image.
         // To offset translate again
-        g2.translate(-10,10);
+        g2.translate(0,0);
+        g2.rotate(rotation); // Rotate image.
+        g2.scale(scaleX, scaleY); // Scale image.
+        //g2.drawImage(Pi, 0, 0, this); // Draw Pi.
+        //g2.drawImage(Phi, 0, 0, this); // Draw Phi.
+        g2.drawImage(matrixImages[1], 0, 0, this); // Draw Phi.
+        g2.setTransform(savedTransform);
+
+        //Add another image, offset by -10, 10 from image one
+        g2.translate(translateX, translateY); // Move image.
+        // To offset translate again
+        g2.translate(-30,20);
         g2.rotate(rotation); // Rotate image.
         g2.scale(scaleX, scaleY); // Scale image.
         //g2.drawImage(Pi, 0, 0, this); // Draw Pi.
@@ -151,23 +172,12 @@ public class CMSC405P1Template extends JPanel {
         g2.drawImage(matrixImages[0], 0, 0, this); // Draw Euler.
         g2.setTransform(savedTransform);
 
-        // Add another T image
-        g2.translate(translateX, translateY); // Move image.
-        // To offset translate again
-        // This allows you to place your images across your graphic
-        g2.translate(-30,30);
-        g2.rotate(rotation); // Rotate image.
-        g2.scale(scaleX, scaleY); // Scale image.
-        //g2.drawImage(Pi, 0, 0, this); // Draw Pi.
-        g2.drawImage(matrixImages[1], 0, 0, this); // Draw Phi.
-        //g2.drawImage(euler, 0, 0, this); // Draw Euler.
-        g2.setTransform(savedTransform);
 
-        // Add another T image
+        // Add another image, offset 10, -10 from image one
         g2.translate(translateX, translateY); // Move image.
         // To offset translate again
         // This allows you to place your images across your graphic
-        g2.translate(10,-10);
+        g2.translate(30,-20);
         g2.rotate(rotation); // Rotate image.
         g2.scale(scaleX, scaleY); // Scale image.
         g2.drawImage(matrixImages[2], 0, 0, this); // Draw Pi.
